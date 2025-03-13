@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RootNamespace>ClientCertEchoClient</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DefaultStrategy>Singleton</DefaultStrategy>
+    <!-- <DefaultStrategy>Defaults</DefaultStrategy> -->
+    <!-- <DefaultStrategy>MultiHandler</DefaultStrategy> -->
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Overridable in CLI via -p:Strategy=... -->
+    <Strategy Condition="'$(Strategy)' == ''">$(DefaultStrategy)</Strategy>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Common/*.cs" />
+    <Compile Include="Program.$(Strategy).cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Strategy)' == 'MultiHandler'">
+    <Compile Include="Helpers/*.cs" />
+  </ItemGroup>
+
+</Project>
