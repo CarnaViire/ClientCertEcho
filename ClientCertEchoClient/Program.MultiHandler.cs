@@ -23,8 +23,12 @@ builder.Services.AddHttpClient("Multi-Handler")
                 SslOptions = { RemoteCertificateValidationCallback = delegate { return true; } }, // For testing only
                 PooledConnectionLifetime = TimeSpan.FromMinutes(2), // From default HandlerLifetime
             };
-            handler.SslOptions.LocalCertificateSelectionCallback =
-                delegate { return certRepo.GetCertificate(userId); };
+
+            // Using LocalCertificateSelectionCallback instead of the ClientCertificates collection
+            // allows us to dynamically retrieve the certificate from the repository in case it has changed
+            // NOTE: this executes on each connection creation
+            handler.SslOptions.LocalCertificateSelectionCallback = delegate { return certRepo.GetCertificate(userId); };
+
             return handler;
         },
         TimeSpan.FromMinutes(2))) // From default HandlerLifetime

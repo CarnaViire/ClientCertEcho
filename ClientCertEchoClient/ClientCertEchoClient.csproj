@@ -9,8 +9,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefaultStrategy>Singleton</DefaultStrategy>
-    <!-- <DefaultStrategy>Defaults</DefaultStrategy> -->
+    <!-- <DefaultStrategy>Singleton</DefaultStrategy> -->
+    <DefaultStrategy>LazyInit</DefaultStrategy>
+    <!-- <DefaultStrategy>ConfigureOptions</DefaultStrategy> -->
     <!-- <DefaultStrategy>MultiHandler</DefaultStrategy> -->
   </PropertyGroup>
 

@@ -12,7 +12,7 @@ builder.Services.AddScoped<UserContext>();
 
 #endregion
 
-#region HttpClient registrations (HttpClientDefaults strategy)
+#region HttpClient registrations (ConfigureOptions strategy)
 
 builder.Services.ConfigureHttpClientDefaults(b => b
     .UseSocketsHttpHandler((h, services) =>
@@ -76,7 +76,7 @@ app.Run();
 
 // ---------------
 
-#region Get HttpClient instance (HttpClientDefaults strategy)
+#region Get HttpClient instance (ConfigureOptions strategy)
 
 static HttpClient GetHttpClient(string clientName, IServiceProvider services)
 {
@@ -86,7 +86,7 @@ static HttpClient GetHttpClient(string clientName, IServiceProvider services)
 
 #endregion
 
-#region HACK: ClientCertificateConfigurator (HttpClientDefaults strategy)
+#region HACK: ClientCertificateConfigurator (ConfigureOptions strategy)
 
 // This is a HACK to get access to the name of the client from the callback
 // See https://github.com/dotnet/runtime/issues/110167
@@ -126,7 +126,7 @@ class ClientCertificateConfigurator : IConfigureNamedOptions<HttpClientFactoryOp
         options.HttpClientActions.Add(client =>
         {
             // (3.2) Configure client (client name access)
-            client.DefaultRequestHeaders.Add("X-HttpClient", $"Name={userId};Strategy=HttpClientDefaults");
+            client.DefaultRequestHeaders.Add("X-HttpClient", $"Name={userId};Strategy=ConfigureOptions");
         });
     }
 
